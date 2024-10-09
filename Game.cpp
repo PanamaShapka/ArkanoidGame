@@ -35,6 +35,11 @@ namespace ArkanoidGame {
 			// Update ball
 			ball.Update(deltaTime);
 
+			// Check collisions
+			collisionHandler.CheckCollisionBetweenBallAndScreenBorders(ball);
+			collisionHandler.CheckCollisionBetweenBallAndPlatform(ball, platform);
+			collisionHandler.CheckCollisionBetweenBallAndBlocksSet(ball, blocksSet);
+				
 			break;
 		}
 		case GameState::State::GAME_OVER:
@@ -68,12 +73,16 @@ namespace ArkanoidGame {
 
 		// Draw ball
 		ball.Draw(window);
+
+		// Draw blocks
+		blocksSet.Draw(window);
 	}
 
 	void Game::SetStartState()
 	{
 		ball.SetStartState();
 		platform.SetStartState();
+		blocksSet.SetStartState();
 
 		// Set game state
 		state.SetState(GameState::State::PLAYING);

@@ -6,7 +6,7 @@ namespace ArkanoidGame {
 	const std::string GAME_NAME = "ArkanoidUltra";
 	const std::string RESOURCES_PATH = "Resources";
 
-	const int SCREEN_WIDTH = 1100;
+	const int SCREEN_WIDTH = 1110;
 	const int SCREEN_HEIGHT = 750;
 
 	const float PLATFORM_SPPED = 500.f;
@@ -14,5 +14,7 @@ namespace ArkanoidGame {
 
 	const float PLATFORM_MOVEMENT_RESTRICTION_DISTANCE_FROM_SCREEN_BORDERS = 10.f; // In pixels
 
-	const float PAUSE_BETWEEN_ATTEMERTS = 5.f;
+	const float PAUSE_BETWEEN_ATTEMERTS = 1.f; // In seconds
+
+	const sf::Vector2f BLOCK_SIZE(100.f, 25.f);
 }

@@ -2,12 +2,17 @@
 #include "SFML/Graphics.hpp"
 #include "Constants.h"
 #include "Math.h"
+#include "GameObject.h"
 
 namespace ArkanoidGame {
 
-	class Platform
+	class CollisionHandler;
+
+	class Platform : public GameObject
 	{
 	public:
+
+		friend CollisionHandler;
 
 		Platform();
 
@@ -18,7 +23,7 @@ namespace ArkanoidGame {
 		};
 
 		void Update(PlatformDirection platformDirection, float deltaTime);
-		void Draw(sf::RenderWindow& window);
+		void Draw(sf::RenderWindow& window) override;
 
 		void SetStartState();
 

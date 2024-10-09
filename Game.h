@@ -3,6 +3,9 @@
 #include "Platform.h"
 #include "Ball.h"
 #include "GameState.h"
+#include "Block.h"
+#include "BlocksSet.h"
+#include "CollisionHandler.h"
 
 namespace ArkanoidGame {
 
@@ -17,7 +20,9 @@ namespace ArkanoidGame {
 		void Draw(sf::RenderWindow& window);
 
 		Platform& GetPlatform() { return platform; };
+		Ball& GetBall() { return ball; }
 		GameState& GetState() { return state; };
+		BlocksSet& GetBlocksSet() { return blocksSet; }
 
 	private:
 
@@ -27,10 +32,13 @@ namespace ArkanoidGame {
 		sf::RectangleShape background;
 		Platform platform;
 		Ball ball;
+		BlocksSet blocksSet;
 
 		float elapsedTimeBetweenAttemerts = 0.f;
 
 		GameState state;
+
+		CollisionHandler collisionHandler;
 	};
 
 }

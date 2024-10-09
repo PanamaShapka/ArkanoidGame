@@ -11,7 +11,7 @@ namespace ArkanoidGame {
 
 	Application::Application() : window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), GAME_NAME) 
 	{	
-		//srand(time(NULL)); Не работает оно тут :(
+		// Init game
 	}
 
 	Application::~Application() 

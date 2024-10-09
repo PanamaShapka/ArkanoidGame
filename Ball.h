@@ -2,34 +2,29 @@
 #include "SFML/Graphics.hpp"
 #include "Constants.h"
 #include "Math.h"
+#include "GameObject.h"
 
 namespace ArkanoidGame {
 
-	class Ball
+	class CollisionHandler;
+
+	class Ball : public GameObject
 	{
 	public:
+
+		friend CollisionHandler;
 
 		Ball();
 
 		void Update(float deltaTime);
-		void Draw(sf::RenderWindow& window);
+		void Draw(sf::RenderWindow& window) override;
+
+		sf::Vector2f GetPosition() { return ball.getPosition(); }
+		float GetRadius() { return ball.getRadius(); }
 
 		void SetStartState();
 
 	private:
-
-		void CheckCollisionWithPlatform();
-		void CheckCollisionWithScreenBorders();
-		
-		enum class RectangleSide {
-			UP_SIDE,
-			RIGHT_SIDE,
-			DOWN_SIDE,
-			LEFT_SIDE,
-			ALL_RECTANGLE
-		};
-
-		bool IsBallCollideWithRectangle(sf::Vector2f rectanglePosition, sf::Vector2f rectangleSize, RectangleSide rectangleSide);
 
 		enum class BallMovement {
 			RIGHT_MOVEMENT,
@@ -44,8 +39,8 @@ namespace ArkanoidGame {
 
 		sf::Vector2f axisSpeed;
 		sf::CircleShape ball;
-		bool isBallCollideWithScreenBorder = false;
-		bool isBallCollideWithRectangle = false;
+		bool isCollideWithScreenBorder = false;
+		bool isCollideWithRectangle = false;
 	};
 
 }
