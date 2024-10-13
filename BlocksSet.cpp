@@ -7,6 +7,11 @@ namespace ArkanoidGame {
 		SetStartState();
 	}
 
+	BlocksSet::~BlocksSet()
+	{
+
+	}
+
 	void BlocksSet::DestroyBlock(int blockIndex)
 	{
 		if (blockIndex < 0 || blockIndex >= blocksSet.size()) {
@@ -26,7 +31,7 @@ namespace ArkanoidGame {
 	void BlocksSet::SetStartState()
 	{
 		blocksSet.clear();
-		blocksSet.reserve(50);
+		blocksSet.reserve(AMOUNT_OF_BLOCKS);
 
 		// Generate random non-repeating blocks indexes
 		std::vector<int> blocksIndexes;

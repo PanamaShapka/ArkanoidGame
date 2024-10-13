@@ -9,6 +9,8 @@ namespace ArkanoidGame {
 	{
 	public:
 
+		~GameObject() = default;
+
 		virtual void Draw(sf::RenderWindow& window) = 0;
 
 	};

@@ -12,9 +12,8 @@ namespace ArkanoidGame {
 	{
 	public:
 
-		friend CollisionHandler;
-
 		Platform();
+		~Platform();
 
 		enum class PlatformDirection {
 			RIGHT = 0,
@@ -29,6 +28,7 @@ namespace ArkanoidGame {
 
 		sf::Vector2f GetPosition() { return platform.getPosition(); };
 		sf::Vector2f GetSize() { return platform.getSize(); };
+		PlatformDirection GetDirection() { return direction; }
 		
 	private:
 		sf::RectangleShape platform;

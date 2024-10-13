@@ -8,6 +8,7 @@ namespace ArkanoidGame {
 	public:
 
 		BlocksSet();
+		~BlocksSet();
 
 		void DestroyBlock(int blockIndex);
 		void Draw(sf::RenderWindow& window) override;

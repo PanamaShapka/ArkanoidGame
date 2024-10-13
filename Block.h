@@ -10,7 +10,9 @@ namespace ArkanoidGame {
 	{
 	public:
 
+		~Block();
 		Block(sf::Vector2f position);
+		
 
 		void Draw(sf::RenderWindow& window) override;
 

@@ -48,10 +48,10 @@ namespace ArkanoidGame {
 			}
 
 			// Update game
-			game.Update(deltaTime);
+			gameState.Update(deltaTime);
 
 			// Draw game
-			game.Draw(window);
+			gameState.Draw(window);
 			window.display();
 		}
 	}

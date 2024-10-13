@@ -1,4 +1,5 @@
 #pragma once
+#include <cassert>
 #include "SFML/Graphics.hpp"
 #include "Platform.h"
 #include "Ball.h"
@@ -15,29 +16,20 @@ namespace ArkanoidGame {
 
 		Game();
 		~Game();
-
-		void Update(float deltaTime);
-		void Draw(sf::RenderWindow& window);
-
+		
+		sf::RectangleShape& GetBackground() { return background; }
 		Platform& GetPlatform() { return platform; };
 		Ball& GetBall() { return ball; }
-		GameState& GetState() { return state; };
 		BlocksSet& GetBlocksSet() { return blocksSet; }
+		CollisionHandler& GetCollisionHandler() { return collisionHandler; }
 
 	private:
 
-		void SetStartState();
-
-	private:
+		// Game objects
 		sf::RectangleShape background;
 		Platform platform;
 		Ball ball;
 		BlocksSet blocksSet;
-
-		float elapsedTimeBetweenAttemerts = 0.f;
-
-		GameState state;
-
 		CollisionHandler collisionHandler;
 	};
 

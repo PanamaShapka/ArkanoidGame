@@ -2,14 +2,19 @@
 
 namespace ArkanoidGame {
 
-	Platform::Platform() 
+	Platform::Platform()
 	{
 		// Init rectangle
-		platform.setFillColor(sf::Color::Magenta);
+		platform.setFillColor(sf::Color(64.f, 224.f, 208.f, 255.f));
 		platform.setSize(sf::Vector2f(150.f, 10.f));
 		SetRectangleRelativeOrigin(platform, sf::Vector2f(0.5f, 0.5f));
 		
 		SetStartState();
+	}
+
+	Platform::~Platform()
+	{
+
 	}
 
 	void Platform::Update(PlatformDirection platformDirection, float deltaTime)

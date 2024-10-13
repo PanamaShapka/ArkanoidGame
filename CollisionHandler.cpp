@@ -36,7 +36,7 @@ namespace ArkanoidGame {
 			}
 		}
 		else if (ball.GetPosition().y + ball.GetRadius() > SCREEN_HEIGHT) { // Down border
-			Application::Instance().GetGame().GetState().SetState(GameState::State::GAME_OVER);
+			Application::Instance().GetGameState().SetState(GameState::State::GAME_OVER);
 		}
 		else {
 			ball.isCollideWithScreenBorder = false;

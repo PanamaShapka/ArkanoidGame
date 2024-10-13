@@ -4,6 +4,11 @@
 
 namespace ArkanoidGame {
 
+	Ball::~Ball()
+	{
+
+	}
+
 	Ball::Ball()
 	{
 		ball.setFillColor(sf::Color::Yellow);

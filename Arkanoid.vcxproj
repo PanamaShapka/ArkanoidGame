@@ -141,6 +141,11 @@
     <ClCompile Include="CollisionHandler.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameState.cpp" />
+    <ClCompile Include="GameStateData.cpp" />
+    <ClCompile Include="GameState_GameOverMenu.cpp" />
+    <ClCompile Include="GameState_GameWinMenu.cpp" />
+    <ClCompile Include="GameState_MainMenu.cpp" />
+    <ClCompile Include="GameState_Playing.cpp" />
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -154,6 +159,11 @@
     <ClInclude Include="CollisionHandler.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameState.h" />
+    <ClInclude Include="GameStateData.h" />
+    <ClInclude Include="GameState_GameOverMenu.h" />
+    <ClInclude Include="GameState_GameWinMenu.h" />
+    <ClInclude Include="GameState_MainMenu.h" />
+    <ClInclude Include="GameState_Playing.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Constants.h" />

@@ -1,8 +1,7 @@
 #pragma once
-#include "SFML/Window.hpp"
 #include "SFML/Graphics.hpp"
 
-#include "Constants.h"
+#include "GameState.h"
 #include "Game.h"
 
 namespace ArkanoidGame {
@@ -18,12 +17,14 @@ namespace ArkanoidGame {
 		void Run();
 
 		Game& GetGame() { return game; }
+		GameState& GetGameState() { return gameState; }
 
 	private:
 		Application();
 		~Application();
 
 	private:
+		GameState gameState;
 		Game game;
 		sf::RenderWindow window;
 	};

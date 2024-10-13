@@ -19,6 +19,18 @@
     <Filter Include="Файлы заголовков\Block">
       <UniqueIdentifier>{b4129324-7062-4595-ba96-0743ab19a4d4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\GameState">
+      <UniqueIdentifier>{6961c939-2ffb-41b6-a92e-edfaa4f8c7d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\GameState">
+      <UniqueIdentifier>{1baed06e-e9ea-4abf-b875-1edace41ffea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\GameState\GameStates">
+      <UniqueIdentifier>{29204825-954a-4c9e-8a9c-bdb82cba4d45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\GameState\GameStates">
+      <UniqueIdentifier>{6844b123-0526-4881-8411-ed3456225671}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMain.cpp">
@@ -39,7 +51,7 @@
     <ClCompile Include="Ball.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="GameState.cpp">
+    <ClCompile Include="GameStateData.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
@@ -53,6 +65,21 @@
     </ClCompile>
     <ClCompile Include="CollisionHandler.cpp">
       <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="GameState_Playing.cpp">
+      <Filter>Исходные файлы\GameState\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="GameState.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="GameState_GameOverMenu.cpp">
+      <Filter>Исходные файлы\GameState\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="GameState_MainMenu.cpp">
+      <Filter>Исходные файлы\GameState\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="GameState_GameWinMenu.cpp">
+      <Filter>Исходные файлы\GameState\GameStates</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -74,7 +101,7 @@
     <ClInclude Include="Ball.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="GameState.h">
+    <ClInclude Include="GameStateData.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
@@ -88,6 +115,21 @@
     </ClInclude>
     <ClInclude Include="CollisionHandler.h">
       <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState_Playing.h">
+      <Filter>Файлы заголовков\GameState\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState_GameOverMenu.h">
+      <Filter>Файлы заголовков\GameState\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState_MainMenu.h">
+      <Filter>Файлы заголовков\GameState\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState_GameWinMenu.h">
+      <Filter>Файлы заголовков\GameState\GameStates</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

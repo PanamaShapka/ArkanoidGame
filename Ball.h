@@ -14,6 +14,7 @@ namespace ArkanoidGame {
 
 		friend CollisionHandler;
 
+		~Ball();
 		Ball();
 
 		void Update(float deltaTime);
