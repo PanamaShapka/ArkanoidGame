@@ -22,7 +22,7 @@ namespace ArkanoidGame {
 		game.GetCollisionHandler().CheckCollisionBetweenBallAndBlocksSet(game.GetBall(), game.GetBlocksSet());
 
 		// Check block set
-		if (game.GetBlocksSet().GetBlocksSet().size() == 0) {
+		if (game.GetBlocksSet().GetAmountBlocks() == 0) {
 			Application::Instance().GetGameState().SetState(GameState::State::GAME_WIN);
 		}
 	}

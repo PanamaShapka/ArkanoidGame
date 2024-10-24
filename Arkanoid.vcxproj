@@ -136,6 +136,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Ball.cpp" />
+    <ClCompile Include="BasicBlock.cpp" />
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="BlocksSet.cpp" />
     <ClCompile Include="CollisionHandler.cpp" />
@@ -146,6 +147,7 @@
     <ClCompile Include="GameState_GameWinMenu.cpp" />
     <ClCompile Include="GameState_MainMenu.cpp" />
     <ClCompile Include="GameState_Playing.cpp" />
+    <ClCompile Include="GlassBlock.cpp" />
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -154,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ball.h" />
+    <ClInclude Include="BasicBlock.h" />
     <ClInclude Include="Block.h" />
     <ClInclude Include="BlocksSet.h" />
     <ClInclude Include="CollisionHandler.h" />
@@ -164,6 +167,7 @@
     <ClInclude Include="GameState_GameWinMenu.h" />
     <ClInclude Include="GameState_MainMenu.h" />
     <ClInclude Include="GameState_Playing.h" />
+    <ClInclude Include="GlassBlock.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Constants.h" />

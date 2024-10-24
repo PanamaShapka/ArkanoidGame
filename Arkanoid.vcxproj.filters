@@ -81,6 +81,12 @@
     <ClCompile Include="GameState_GameWinMenu.cpp">
       <Filter>Исходные файлы\GameState\GameStates</Filter>
     </ClCompile>
+    <ClCompile Include="GlassBlock.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicBlock.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Constants.h">
@@ -130,6 +136,12 @@
     </ClInclude>
     <ClInclude Include="GameState_GameWinMenu.h">
       <Filter>Файлы заголовков\GameState\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="GlassBlock.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicBlock.h">
+      <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

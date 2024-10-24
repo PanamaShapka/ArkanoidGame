@@ -2,23 +2,35 @@
 
 namespace ArkanoidGame {
 
-	Block::~Block()
+	Block::Block(const sf::Vector2i positionOnField)
 	{
-		
-	}
+		this->positionOnField = positionOnField;
 
-	Block::Block(sf::Vector2f position)
-	{
 		// Init rectangle
-		block.setFillColor(sf::Color(95.f, 158.f, 160.f, 255.f));
 		block.setSize(BLOCK_SIZE);
 		SetRectangleRelativeOrigin(block, sf::Vector2f(0.5f, 0.5f));
-		block.setPosition(position);
+		block.setPosition(sf::Vector2f(positionOnField.x * (BLOCK_SIZE.x + 10.f) + (10.f + BLOCK_SIZE.x / 2), positionOnField.y * (BLOCK_SIZE.y + 10.f) + (10.f + BLOCK_SIZE.y / 2)));
 	}
 
 	void Block::Draw(sf::RenderWindow& window)
 	{
 		window.draw(block);
+	}
+
+	void Block::Hit()
+	{
+		--HP;
+		SetBlockColor();
+	}
+
+	bool Block::CheckHP()
+	{
+		if (HP == 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 }
 

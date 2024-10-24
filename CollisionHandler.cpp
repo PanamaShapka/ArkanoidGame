@@ -87,9 +87,7 @@ namespace ArkanoidGame {
 
 	void CollisionHandler::CheckCollisionBetweenBallAndBlocksSet(Ball& ball, BlocksSet& blocksSet)
 	{
-		int blockIndex = -1;
-		for (Block& currentBlock : blocksSet.GetBlocksSet()) {
-			++blockIndex;
+		for (BasicBlock& currentBlock : blocksSet.GetBasicBlocks()) {
 
 			// Check ball collision with block
 			if (!IsCircleCollideWithRectangle(ball.GetPosition(), ball.GetRadius(), currentBlock.GetPosition(), currentBlock.GetSize(), RectangleSide::ALL_RECTANGLE)) {
@@ -138,8 +136,21 @@ namespace ArkanoidGame {
 				ball.isCollideWithRectangle = false;
 			}
 
-			// Destroy block
-			blocksSet.DestroyBlock(blockIndex);
+			// Hit block
+			blocksSet.HitBlock(currentBlock.GetPositionOnField());
+			return;
+		}
+
+		for (GlassBlock& currentBlock : blocksSet.GetGlassBlocks()) {
+
+			// Check ball collision with block
+			if (!IsCircleCollideWithRectangle(ball.GetPosition(), ball.GetRadius(), currentBlock.GetPosition(), currentBlock.GetSize(), RectangleSide::ALL_RECTANGLE)) {
+				continue; // If ball doesn't collide with block
+			}
+
+			// Hit block
+			blocksSet.HitBlock(currentBlock.GetPositionOnField());
+			return;
 		}
 	}
 

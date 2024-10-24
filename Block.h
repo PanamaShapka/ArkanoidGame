@@ -10,20 +10,27 @@ namespace ArkanoidGame {
 	{
 	public:
 
-		~Block();
-		Block(sf::Vector2f position);
-		
+		Block(const sf::Vector2i positionOnField);
 
 		void Draw(sf::RenderWindow& window) override;
 
+		void Hit();
+		bool CheckHP();
+
 		sf::Vector2f GetPosition() { return block.getPosition(); };
 		sf::Vector2f GetSize() { return block.getSize(); };
+		sf::Vector2i GetPositionOnField() { return positionOnField; };
 
-	private:
+	protected:
 
-	private:
+		virtual void SetBlockHP() = 0;
+		virtual void SetBlockColor() {}
 
+	protected:
+
+		int HP = 1;
 		sf::RectangleShape block;
+		sf::Vector2i positionOnField;
 	};
 
 }

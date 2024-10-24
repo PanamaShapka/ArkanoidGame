@@ -4,7 +4,7 @@ namespace ArkanoidGame {
 
 	BlocksSet::BlocksSet()
 	{
-		SetStartState();
+		
 	}
 
 	BlocksSet::~BlocksSet()
@@ -12,40 +12,65 @@ namespace ArkanoidGame {
 
 	}
 
-	void BlocksSet::DestroyBlock(int blockIndex)
-	{
-		if (blockIndex < 0 || blockIndex >= blocksSet.size()) {
-			return;
+	void BlocksSet::HitBlock(sf::Vector2i positionOnField)
+	{ 
+		int index = -1;
+		for (BasicBlock& currentBlock : basicBlocks) {
+			++index;
+			if (currentBlock.GetPositionOnField() == positionOnField) {
+				currentBlock.Hit();
+				if (currentBlock.CheckHP()) {
+					basicBlocks.erase(basicBlocks.begin() + index);
+				}
+			}
 		}
 
-		blocksSet.erase(blocksSet.begin() + blockIndex);
+		index = -1;
+		for (GlassBlock& currentBlock : glassBlocks) {
+			++index;
+			if (currentBlock.GetPositionOnField() == positionOnField) {
+				currentBlock.Hit();
+				if (currentBlock.CheckHP()) {
+					glassBlocks.erase(glassBlocks.begin() + index);
+				}
+			}
+		}
+
 	}
 
 	void BlocksSet::Draw(sf::RenderWindow& window)
 	{
-		for (auto& currentBlock : blocksSet) {
+		for (BasicBlock& currentBlock : basicBlocks) {
+			currentBlock.Draw(window);
+		}
+		for (GlassBlock& currentBlock : glassBlocks) {
 			currentBlock.Draw(window);
 		}
 	}
 
 	void BlocksSet::SetStartState()
 	{
-		blocksSet.clear();
-		blocksSet.reserve(AMOUNT_OF_BLOCKS);
+		basicBlocks.clear();
+		glassBlocks.clear();
 
 		// Generate random non-repeating blocks indexes
 		std::vector<int> blocksIndexes;
-		blocksIndexes.insert(blocksIndexes.begin(), blocksSet.capacity(), 0);
+		blocksIndexes.insert(blocksIndexes.begin(), AMOUNT_OF_BLOCKS, 0);
 		fillVectorWithRandomBlocksIndexes(blocksIndexes);
 			
 		// Set blocks to their indexes
 		for (int blockIndex : blocksIndexes) {
 
-			sf::Vector2f position;
-			position.x = (10.f + BLOCK_SIZE.x / 2) + (10.f + BLOCK_SIZE.x) * ((blockIndex - 1) % 10);
-			position.y = (10.f + BLOCK_SIZE.y / 2) + (10.f + BLOCK_SIZE.y) * ((blockIndex - 1) / 10);
+			sf::Vector2i position;
+			position.x = (blockIndex - 1) % 10;
+			position.y = (blockIndex - 1) / 10;
 
-			blocksSet.push_back(Block(position));
+			if (rand() % int(CHANCE_TO_GET_GLASS_BLOCK * 100) == 0) {
+				glassBlocks.push_back(GlassBlock(position));
+			}
+			else {
+				basicBlocks.push_back(BasicBlock(position));
+			}
 		}
 	}
 

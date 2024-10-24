@@ -9,7 +9,7 @@ namespace ArkanoidGame {
 	{
 	public:
 
-		~GameStateData() = default;
+		virtual ~GameStateData() = default;
 		
 		virtual void Update(float deltaTime, Game& game) = 0;
 		virtual void Draw(sf::RenderWindow& window, Game& game) = 0;

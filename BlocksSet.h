@@ -1,20 +1,23 @@
 #pragma once
-#include "Block.h"
+#include "BasicBlock.h"
+#include "GlassBlock.h"
 
 namespace ArkanoidGame {
 
-	class BlocksSet : GameObject
+	class BlocksSet : public GameObject
 	{
 	public:
 
 		BlocksSet();
 		~BlocksSet();
 
-		void DestroyBlock(int blockIndex);
+		void HitBlock(sf::Vector2i positionOnField);
 		void Draw(sf::RenderWindow& window) override;
 		void SetStartState();
 		
-		std::vector<Block> GetBlocksSet() { return blocksSet; }
+		int GetAmountBlocks() { return basicBlocks.size() + glassBlocks.size(); }
+		std::vector<BasicBlock> GetBasicBlocks() { return basicBlocks; }
+		std::vector<GlassBlock> GetGlassBlocks() { return glassBlocks; }
 
 	private:
 
@@ -22,7 +25,8 @@ namespace ArkanoidGame {
 
 	private:
 
-		std::vector<Block> blocksSet;
+		std::vector<BasicBlock> basicBlocks;
+		std::vector<GlassBlock> glassBlocks;
 
 	};
 
