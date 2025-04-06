@@ -7,7 +7,7 @@ namespace ArkanoidGame {
 	{
 	public:
 
-		GlassBlock(const sf::Vector2i positionOnField) : Block(positionOnField) { SetBlockHP(); SetBlockColor(); }
+		GlassBlock(const sf::Vector2i positionOnField) : Block(positionOnField, Type::GlassBlock) { SetBlockHP(); SetBlockColor(); }
 
 	private:
 

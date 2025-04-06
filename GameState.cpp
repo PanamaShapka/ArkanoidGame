@@ -44,6 +44,11 @@ namespace ArkanoidGame {
 			gameStateData = &gameState_GameWinMenu;
 			break;
 		}
+		case State::SCORE_MENU:
+		{
+			gameStateData = &gameState_ScoreMenu;
+			break;
+		}
 		default:
 			break;
 		}

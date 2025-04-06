@@ -9,13 +9,11 @@ namespace ArkanoidGame {
 
 	}
 
-	Ball::Ball()
+	Ball::Ball(sf::Vector2f position)
 	{
-		ball.setFillColor(sf::Color::Yellow);
-		ball.setRadius(10.f);
-		SetCircleRelativeOrigin(ball, sf::Vector2f(0.5f, 0.5f));
-		
 		SetStartState();
+		SetCircleRelativeOrigin(ball, sf::Vector2f(0.5f, 0.5f));
+		ball.setPosition(position);
 	}
 
 	void Ball::Update(float deltaTime)
@@ -29,49 +27,84 @@ namespace ArkanoidGame {
 		window.draw(ball);
 	}
 
+	void Ball::SetState(std::shared_ptr<BallState> state)
+	{
+		this->state = state;
+		ball.setFillColor(state->GetColor());
+		ball.setRadius(state->GetRadius());
+	}
 
 	void Ball::SetStartState()
 	{
-		// Set ball position
+		// Set position
 		ball.setPosition(sf::Vector2f((float)SCREEN_WIDTH / 2.f, (float)SCREEN_HEIGHT - 175.f));
 
-		// Set ball flying angle
-		axisSpeed = { ((rand() % 199 - 99) / 100.f), 1.f };
+		// Set ball state
+		SetState(std::make_shared<BallStateDefault>());
+
+		// Set random axis speed
+		SetRandomAxisSpeed();
+
+		isCollideWithPlatform = false;
+		isCollideWithScreenBorders = false;
 	}
 
-	void Ball::MirrorBallSpeed(BallMovement currentBallMovement)
+	void Ball::SetRandomAxisSpeed()
 	{
-		// Check current ball movement
-		switch (currentBallMovement)
+		axisSpeed.x = float(rand() % 99 + 1) / 100.f;
+		axisSpeed.y = std::sqrtf(1 - (axisSpeed.x * axisSpeed.x));
+
+		if (rand() % 2) {
+			axisSpeed.x *= -1;
+		}
+
+		if (rand() % 2) {
+			axisSpeed.y *= -1;
+		}
+	}
+
+	void Ball::ChangeBallMovement(BallMovementX ballMovementX, BallMovementY ballMovementY)
+	{
+		switch (ballMovementX)
 		{
-		case ArkanoidGame::Ball::BallMovement::RIGHT_MOVEMENT:
-		{
-			if (axisSpeed.x > 0) {
-				axisSpeed.x *= -1;
-			}
-			break;
-		}	
-		case ArkanoidGame::Ball::BallMovement::LEFT_MOVEMENT:
+		case ArkanoidGame::Ball::BallMovementX::RIGHT_MOVEMENT:
 		{
 			if (axisSpeed.x < 0) {
 				axisSpeed.x *= -1;
 			}
 			break;
+		}	
+		case ArkanoidGame::Ball::BallMovementX::LEFT_MOVEMENT:
+		{
+			if (axisSpeed.x > 0) {
+				axisSpeed.x *= -1;
+			}
+			break;
 		}
-		case ArkanoidGame::Ball::BallMovement::DOWN_MOVEMENT:
+		case ArkanoidGame::Ball::BallMovementX::NONE:
+			break;
+		default:
+			break;
+		}
+
+		switch (ballMovementY)
+		{
+		case ArkanoidGame::Ball::BallMovementY::UP_MOVEMENT:
 		{
 			if (axisSpeed.y > 0) {
 				axisSpeed.y *= -1;
 			}
 			break;
-		}
-		case ArkanoidGame::Ball::BallMovement::UP_MOVEMENT:
+		};
+		case ArkanoidGame::Ball::BallMovementY::DOWN_MOVEMENT:
 		{
 			if (axisSpeed.y < 0) {
 				axisSpeed.y *= -1;
 			}
 			break;
-		}
+		};
+		case ArkanoidGame::Ball::BallMovementY::NONE:
+			break;
 		default:
 			break;
 		}

@@ -7,39 +7,39 @@ namespace ArkanoidGame {
 	{
 		// Check x collison
 		if (ball.GetPosition().x + ball.GetRadius() > SCREEN_WIDTH) { // Right border
-			if (!ball.isCollideWithScreenBorder) {
-				ball.MirrorBallSpeed(Ball::BallMovement::RIGHT_MOVEMENT);
+			if (!ball.isCollideWithScreenBorders) {
+				ball.ChangeBallMovement(Ball::BallMovementX::LEFT_MOVEMENT, Ball::BallMovementY::NONE);
 			}
 			else {
-				ball.isCollideWithScreenBorder = true;
+				ball.isCollideWithScreenBorders = true;
 			}
 		}
 		else if (ball.GetPosition().x - ball.GetRadius() < 0.f) { // Left border
-			if (!ball.isCollideWithScreenBorder) {
-				ball.MirrorBallSpeed(Ball::BallMovement::LEFT_MOVEMENT);
+			if (!ball.isCollideWithScreenBorders) {
+				ball.ChangeBallMovement(Ball::BallMovementX::RIGHT_MOVEMENT, Ball::BallMovementY::NONE);
 			}
 			else {
-				ball.isCollideWithScreenBorder = true;
+				ball.isCollideWithScreenBorders = true;
 			}
 		}
 		else {
-			ball.isCollideWithScreenBorder = false;
+			ball.isCollideWithScreenBorders = false;
 		}
 
 		// Check y collision
 		if (ball.GetPosition().y - ball.GetRadius() < 0.f) { // Up border
-			if (!ball.isCollideWithScreenBorder) {
-				ball.MirrorBallSpeed(Ball::BallMovement::UP_MOVEMENT);
+			if (!ball.isCollideWithScreenBorders) {
+				ball.ChangeBallMovement(Ball::BallMovementX::NONE, Ball::BallMovementY::DOWN_MOVEMENT);
 			}
 			else {
-				ball.isCollideWithScreenBorder = true;
+				ball.isCollideWithScreenBorders = true;
 			}
 		}
 		else if (ball.GetPosition().y + ball.GetRadius() > SCREEN_HEIGHT) { // Down border
 			Application::Instance().GetGameState().SetState(GameState::State::GAME_OVER);
 		}
 		else {
-			ball.isCollideWithScreenBorder = false;
+			ball.isCollideWithScreenBorders = false;
 		}
 	}
 
@@ -50,108 +50,248 @@ namespace ArkanoidGame {
 			return; // If ball doesn't collide with platform
 		}
 
-		// Check y collision
-		if (IsCircleCollideWithRectangle(ball.GetPosition(), ball.GetRadius(), platform.GetPosition(), platform.GetSize(), RectangleSide::UP_SIDE)) {
-			if (!ball.isCollideWithRectangle) {
-				ball.MirrorBallSpeed(Ball::BallMovement::DOWN_MOVEMENT);
-			}
-			else { 
-				ball.isCollideWithRectangle = true;
-			}
-		}
-		else {
-			ball.isCollideWithRectangle = false;
-		}
+		bool isXCollision = false;
 
 		// Check x collision
 		if (IsCircleCollideWithRectangle(ball.GetPosition(), ball.GetRadius(), platform.GetPosition(), platform.GetSize(), RectangleSide::RIGHT_SIDE)) {
-			if (!ball.isCollideWithRectangle) {
-				ball.MirrorBallSpeed(Ball::BallMovement::LEFT_MOVEMENT);
+			if (!ball.isCollideWithPlatform) {
+				ball.ChangeBallMovement(Ball::BallMovementX::RIGHT_MOVEMENT, Ball::BallMovementY::NONE);
+				isXCollision = true;
 			}
 			else { 
-				ball.isCollideWithRectangle = true;
+				ball.isCollideWithPlatform = true;
 			}
 		}
 		else if (IsCircleCollideWithRectangle(ball.GetPosition(), ball.GetRadius(), platform.GetPosition(), platform.GetSize(), RectangleSide::LEFT_SIDE)) {
-			if (!ball.isCollideWithRectangle) {
-				ball.MirrorBallSpeed(Ball::BallMovement::RIGHT_MOVEMENT);
+			if (!ball.isCollideWithPlatform) {
+				ball.ChangeBallMovement(Ball::BallMovementX::LEFT_MOVEMENT, Ball::BallMovementY::NONE);
+				isXCollision = true;
 			}
 			else { 
-				ball.isCollideWithRectangle = true;
+				ball.isCollideWithPlatform = true;
 			}
 		}
 		else {
-			ball.isCollideWithRectangle = false;
+			ball.isCollideWithPlatform = false;
+		}
+
+		// Check y collision
+		if (IsCircleCollideWithRectangle(ball.GetPosition(), ball.GetRadius(), platform.GetPosition(), platform.GetSize(), RectangleSide::UP_SIDE)) {
+			if (!ball.isCollideWithPlatform) {
+				if (!isXCollision) {
+					ChangeBallAxisSpeedByCollisionPlatform(ball, platform);
+				}
+				ball.ChangeBallMovement(Ball::BallMovementX::NONE, Ball::BallMovementY::UP_MOVEMENT);
+			}
+			else {
+				ball.isCollideWithPlatform = true;
+			}
+		}
+		else {
+			ball.isCollideWithPlatform = false;
 		}
 	}
 
 	void CollisionHandler::CheckCollisionBetweenBallAndBlocksSet(Ball& ball, BlocksSet& blocksSet)
 	{
-		for (BasicBlock& currentBlock : blocksSet.GetBasicBlocks()) {
+		if (hittedBlockByBall != nullptr) {
+			if (IsCircleCollideWithRectangle(ball.GetPosition(), ball.GetRadius(), hittedBlockByBall->GetPosition(), hittedBlockByBall->GetSize(), RectangleSide::ALL_RECTANGLE)) {
+				return;
+			}
+			else {
+				hittedBlockByBall = nullptr;
+			}
+		}
+		
+		for (auto& currentBlock : blocksSet.blocks) {
 
 			// Check ball collision with block
-			if (!IsCircleCollideWithRectangle(ball.GetPosition(), ball.GetRadius(), currentBlock.GetPosition(), currentBlock.GetSize(), RectangleSide::ALL_RECTANGLE)) {
+			if (!IsCircleCollideWithRectangle(ball.GetPosition(), ball.GetRadius(), currentBlock->GetPosition(), currentBlock->GetSize(), RectangleSide::ALL_RECTANGLE)) {
 				continue; // If ball doesn't collide with block
+			}
+
+			hittedBlockByBall = currentBlock;
+
+			// If ball collide with block
+			if (hittedBlockByBall->GetType() == Block::Type::BasicBlock) {
+ 
+				// Check y collision
+				if (IsCircleCollideWithRectangle(ball.GetPosition(), ball.GetRadius(), hittedBlockByBall->GetPosition(), hittedBlockByBall->GetSize(), RectangleSide::UP_SIDE)) {
+					ball.ChangeBallMovement(Ball::BallMovementX::NONE, Ball::BallMovementY::UP_MOVEMENT);
+				}
+				else if (IsCircleCollideWithRectangle(ball.GetPosition(), ball.GetRadius(), hittedBlockByBall->GetPosition(), hittedBlockByBall->GetSize(), RectangleSide::DOWN_SIDE)) {
+					ball.ChangeBallMovement(Ball::BallMovementX::NONE, Ball::BallMovementY::DOWN_MOVEMENT);
+				}
+
+				// Check x collision
+				if (IsCircleCollideWithRectangle(ball.GetPosition(), ball.GetRadius(), hittedBlockByBall->GetPosition(), hittedBlockByBall->GetSize(), RectangleSide::RIGHT_SIDE)) {
+					ball.ChangeBallMovement(Ball::BallMovementX::RIGHT_MOVEMENT, Ball::BallMovementY::NONE);
+				}
+				else if (IsCircleCollideWithRectangle(ball.GetPosition(), ball.GetRadius(), hittedBlockByBall->GetPosition(), hittedBlockByBall->GetSize(), RectangleSide::LEFT_SIDE)) {
+					ball.ChangeBallMovement(Ball::BallMovementX::LEFT_MOVEMENT, Ball::BallMovementY::NONE);
+				}
+			}
+
+			// Hit block
+			blocksSet.HitBlock(hittedBlockByBall->GetPositionOnField(), ball);
+			return;
+		
+		}
+	}
+
+	void CollisionHandler::CheckCollisionBetweenPlatformAndBonusObjectSet(Platform& platform, BonusObjectSet& bonusObjectSet)
+	{
+		for (auto& currentBonusObject : bonusObjectSet.GetBonuses()) {
+
+			// Check collision with platform
+			if (!IsCircleCollideWithRectangle(currentBonusObject->GetPosition(), currentBonusObject->GetRadius(), platform.GetPosition(), platform.GetSize(), RectangleSide::ALL_RECTANGLE)) {
+				continue; // If bonus doesn't collide with platform
+			}
+
+			// Check collision with down screen border
+			if (currentBonusObject->GetPosition().y - currentBonusObject->GetRadius() > SCREEN_HEIGHT) {
+				currentBonusObject->SetShouldDeleteTrue(); // If bonus collide with down screen border
+				continue;
+			}
+
+			// Activate bonus
+			currentBonusObject->Activate();
+			
+		}
+
+		bonusObjectSet.CheckDeletableBonuses();
+		return;
+	}
+
+	void CollisionHandler::CheckCollisionBetweenMiniBallsSetAndScreenBorders(MiniBallsSet& miniBallsSet)
+	{
+		int ballIndex = -1;
+		for (Ball& currentMiniBall : miniBallsSet.miniBallsSet) {
+			++ballIndex;
+
+			// Check x collison
+			if (currentMiniBall.GetPosition().x + currentMiniBall.GetRadius() > SCREEN_WIDTH) { // Right border
+				if (!currentMiniBall.isCollideWithScreenBorders) {
+					currentMiniBall.ChangeBallMovement(Ball::BallMovementX::LEFT_MOVEMENT, Ball::BallMovementY::NONE);
+				}
+				else {
+					currentMiniBall.isCollideWithScreenBorders = true;
+				}
+			}
+			else if (currentMiniBall.GetPosition().x - currentMiniBall.GetRadius() < 0.f) { // Left border
+				if (!currentMiniBall.isCollideWithScreenBorders) {
+					currentMiniBall.ChangeBallMovement(Ball::BallMovementX::RIGHT_MOVEMENT, Ball::BallMovementY::NONE);
+				}
+				else {
+					currentMiniBall.isCollideWithScreenBorders = true;					
+				}
+			}
+			else {
+				currentMiniBall.isCollideWithScreenBorders = false;
 			}
 
 			// Check y collision
-			if (IsCircleCollideWithRectangle(ball.GetPosition(), ball.GetRadius(), currentBlock.GetPosition(), currentBlock.GetSize(), RectangleSide::UP_SIDE)) {
-				if (!ball.isCollideWithRectangle) {
-					ball.MirrorBallSpeed(Ball::BallMovement::DOWN_MOVEMENT);
+			if (currentMiniBall.GetPosition().y - currentMiniBall.GetRadius() < 0.f) { // Up border
+				if (!currentMiniBall.isCollideWithScreenBorders) {
+					currentMiniBall.ChangeBallMovement(Ball::BallMovementX::NONE, Ball::BallMovementY::DOWN_MOVEMENT);
 				}
 				else {
-					ball.isCollideWithRectangle = true;
+					currentMiniBall.isCollideWithScreenBorders = true;
 				}
 			}
-			else if (IsCircleCollideWithRectangle(ball.GetPosition(), ball.GetRadius(), currentBlock.GetPosition(), currentBlock.GetSize(), RectangleSide::DOWN_SIDE)) {
-				if (!ball.isCollideWithRectangle) {
-					ball.MirrorBallSpeed(Ball::BallMovement::UP_MOVEMENT);
-				}
-				else {
-					ball.isCollideWithRectangle = true;
-				}
+			else if (currentMiniBall.GetPosition().y + currentMiniBall.GetRadius() > SCREEN_HEIGHT) { // Down border
+				miniBallsSet.DeleteBall(miniBallsSet.miniBallsSet.begin() + ballIndex);
+				--ballIndex;
 			}
 			else {
-				ball.isCollideWithRectangle = false;
+				currentMiniBall.isCollideWithScreenBorders = false;
 			}
+		}
+	}
+
+	void CollisionHandler::CheckCollisionBetweenMiniBallsSetAndPlatform(MiniBallsSet& miniBallsSet, Platform& platform)
+	{
+		for (Ball& currentMiniBall : miniBallsSet.miniBallsSet) {
+
+			// Check ball collision with platform
+			if (!IsCircleCollideWithRectangle(currentMiniBall.GetPosition(), currentMiniBall.GetRadius(), platform.GetPosition(), platform.GetSize(), RectangleSide::ALL_RECTANGLE)) {
+				continue; // If ball doesn't collide with platform
+			}
+
+			bool isXCollision = false;
 
 			// Check x collision
-			if (IsCircleCollideWithRectangle(ball.GetPosition(), ball.GetRadius(), currentBlock.GetPosition(), currentBlock.GetSize(), RectangleSide::RIGHT_SIDE)) {
-				if (!ball.isCollideWithRectangle) {
-					ball.MirrorBallSpeed(Ball::BallMovement::LEFT_MOVEMENT);
+			if (IsCircleCollideWithRectangle(currentMiniBall.GetPosition(), currentMiniBall.GetRadius(), platform.GetPosition(), platform.GetSize(), RectangleSide::RIGHT_SIDE)) {
+				if (!currentMiniBall.isCollideWithPlatform) {
+					currentMiniBall.ChangeBallMovement(Ball::BallMovementX::RIGHT_MOVEMENT, Ball::BallMovementY::NONE);
+					isXCollision = true;
 				}
 				else {
-					ball.isCollideWithRectangle = true;
+					currentMiniBall.isCollideWithPlatform = true;
 				}
 			}
-			else if (IsCircleCollideWithRectangle(ball.GetPosition(), ball.GetRadius(), currentBlock.GetPosition(), currentBlock.GetSize(), RectangleSide::LEFT_SIDE)) {
-				if (!ball.isCollideWithRectangle) {
-					ball.MirrorBallSpeed(Ball::BallMovement::RIGHT_MOVEMENT);
+			else if (IsCircleCollideWithRectangle(currentMiniBall.GetPosition(), currentMiniBall.GetRadius(), platform.GetPosition(), platform.GetSize(), RectangleSide::LEFT_SIDE)) {
+				if (!currentMiniBall.isCollideWithPlatform) {
+					currentMiniBall.ChangeBallMovement(Ball::BallMovementX::LEFT_MOVEMENT, Ball::BallMovementY::NONE);
+					isXCollision = true;
 				}
 				else {
-					ball.isCollideWithRectangle = true;
+					currentMiniBall.isCollideWithPlatform = true;
 				}
 			}
 			else {
-				ball.isCollideWithRectangle = false;
+				currentMiniBall.isCollideWithPlatform = false;
 			}
 
-			// Hit block
-			blocksSet.HitBlock(currentBlock.GetPositionOnField());
-			return;
-		}
-
-		for (GlassBlock& currentBlock : blocksSet.GetGlassBlocks()) {
-
-			// Check ball collision with block
-			if (!IsCircleCollideWithRectangle(ball.GetPosition(), ball.GetRadius(), currentBlock.GetPosition(), currentBlock.GetSize(), RectangleSide::ALL_RECTANGLE)) {
-				continue; // If ball doesn't collide with block
+			// Check y collision
+			if (IsCircleCollideWithRectangle(currentMiniBall.GetPosition(), currentMiniBall.GetRadius(), platform.GetPosition(), platform.GetSize(), RectangleSide::UP_SIDE)) {
+				if (!currentMiniBall.isCollideWithPlatform) {
+					if (!isXCollision) {
+						ChangeBallAxisSpeedByCollisionPlatform(currentMiniBall, platform);
+					}
+					currentMiniBall.ChangeBallMovement(Ball::BallMovementX::NONE, Ball::BallMovementY::UP_MOVEMENT);
+				}
+				else {
+					currentMiniBall.isCollideWithPlatform = true;
+				}
 			}
-
-			// Hit block
-			blocksSet.HitBlock(currentBlock.GetPositionOnField());
-			return;
+			else {
+				currentMiniBall.isCollideWithPlatform = false;
+			}
 		}
+	}
+
+	void CollisionHandler::CheckCollisionBetweenMiniBallsSetAndBlocksSet(MiniBallsSet& miniBallsSet, BlocksSet& blocksSet) 
+	{
+		int ballIndex = -1;
+		for (Ball& currentMiniBall : miniBallsSet.miniBallsSet) {
+			++ballIndex;
+
+			for (auto& currentBlock : blocksSet.blocks) {
+
+				// Check ball collision with block
+				if (!IsCircleCollideWithRectangle(currentMiniBall.GetPosition(), currentMiniBall.GetRadius(), currentBlock->GetPosition(), currentBlock->GetSize(), RectangleSide::ALL_RECTANGLE)) {
+					continue; // If ball doesn't collide with block
+				}
+
+				// Hit block
+				blocksSet.HitBlock(currentBlock->GetPositionOnField(), currentMiniBall);
+				miniBallsSet.DeleteBall(miniBallsSet.miniBallsSet.begin() + ballIndex);
+				--ballIndex;
+				break;
+			}
+		}
+	}
+
+	void CollisionHandler::ChangeBallAxisSpeedByCollisionPlatform(Ball& ball, Platform& platform)
+	{
+		float ballAxisSpeedXCoefficient = (ball.GetPosition().x - platform.GetPosition().x + (platform.GetSize().x / 2.f)) / platform.GetSize().x;
+		if (ball.axisSpeed.x < 0) { 
+			ballAxisSpeedXCoefficient -= 1;
+		}
+
+		ball.axisSpeed.x = 0.98f * ballAxisSpeedXCoefficient + 0.01f;
+		ball.axisSpeed.y = std::sqrtf(1 - (ball.axisSpeed.x * ball.axisSpeed.x));
 	}
 
 	bool CollisionHandler::IsCircleCollideWithRectangle(sf::Vector2f circlePosition, float circleRadius, sf::Vector2f rectanglePosition, sf::Vector2f rectangleSize, RectangleSide rectangleSide)

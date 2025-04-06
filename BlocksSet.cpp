@@ -1,4 +1,5 @@
 #include "BlocksSet.h"
+#include "Application.h"
 
 namespace ArkanoidGame {
 
@@ -7,51 +8,42 @@ namespace ArkanoidGame {
 		
 	}
 
-	BlocksSet::~BlocksSet()
-	{
-
+	void BlocksSet::HitBlock(sf::Vector2i positionOnField, Ball& ball)
+	{ 
+		for (auto currentBlock = blocks.begin(); currentBlock != blocks.end(); ++currentBlock) {
+			if (currentBlock->get()->GetPositionOnField() == positionOnField) {
+				currentBlock->get()->Hit(ball);
+				if (currentBlock->get()->CheckHP()) { // Destroy block
+					Application::Instance().GetGame().GetBonusObjectSet().SpawnBonusWithChance(currentBlock->get()->GetPosition());
+					Notify(*currentBlock);
+					blocks.erase(currentBlock);
+				}
+				return;
+			}
+		}
 	}
 
-	void BlocksSet::HitBlock(sf::Vector2i positionOnField)
-	{ 
-		int index = -1;
-		for (BasicBlock& currentBlock : basicBlocks) {
-			++index;
-			if (currentBlock.GetPositionOnField() == positionOnField) {
-				currentBlock.Hit();
-				if (currentBlock.CheckHP()) {
-					basicBlocks.erase(basicBlocks.begin() + index);
-				}
-			}
+	void BlocksSet::DestroyBlock(sf::Vector2i positionOnField)
+	{
+		for (auto currentBlock = blocks.begin(); currentBlock != blocks.end(); ++currentBlock) {
+			if (currentBlock->get()->GetPositionOnField() == positionOnField) {
+				blocks.erase(currentBlock);
+				return;
+			}	
 		}
-
-		index = -1;
-		for (GlassBlock& currentBlock : glassBlocks) {
-			++index;
-			if (currentBlock.GetPositionOnField() == positionOnField) {
-				currentBlock.Hit();
-				if (currentBlock.CheckHP()) {
-					glassBlocks.erase(glassBlocks.begin() + index);
-				}
-			}
-		}
-
 	}
 
 	void BlocksSet::Draw(sf::RenderWindow& window)
 	{
-		for (BasicBlock& currentBlock : basicBlocks) {
-			currentBlock.Draw(window);
-		}
-		for (GlassBlock& currentBlock : glassBlocks) {
-			currentBlock.Draw(window);
+		for (auto& currentBlock : blocks) {
+			currentBlock->Draw(window);
 		}
 	}
 
 	void BlocksSet::SetStartState()
 	{
-		basicBlocks.clear();
-		glassBlocks.clear();
+		pointsCounter = Application::Instance().GetGame().GetPointsCounter();
+		blocks.clear();
 
 		// Generate random non-repeating blocks indexes
 		std::vector<int> blocksIndexes;
@@ -65,13 +57,25 @@ namespace ArkanoidGame {
 			position.x = (blockIndex - 1) % 10;
 			position.y = (blockIndex - 1) / 10;
 
-			if (rand() % int(CHANCE_TO_GET_GLASS_BLOCK * 100) == 0) {
-				glassBlocks.push_back(GlassBlock(position));
+			if (rand() % int(CHANCE_TO_GET_GLASS_BLOCK * 100) == 0) { // Spawn glass block
+				blocks.emplace_back(std::make_shared<GlassBlock>(position));
 			}
-			else {
-				basicBlocks.push_back(BasicBlock(position));
+			else { // Spawn basic block
+				blocks.emplace_back(std::make_shared<BasicBlock>(position));
 			}
 		}
+	}
+
+	void BlocksSet::ReplaceAllToGlassBlocks()
+	{
+		for (auto& currentBlock : blocks) {
+			currentBlock = std::make_shared<GlassBlock>(currentBlock->GetPositionOnField());
+		}
+	}
+
+	void BlocksSet::SetBlockSet(BlocksSet blockSet)
+	{
+		this->blocks = blockSet.blocks;
 	}
 
 	void BlocksSet::fillVectorWithRandomBlocksIndexes(std::vector<int>& blocksIndexes)
@@ -97,7 +101,7 @@ namespace ArkanoidGame {
 						index = 1;
 					}
 
-					// set |i| to iterate thought the vector from its beggining
+					// set i to iterate thought the vector from its beggining
 					i = -1;
 				}
 			}

@@ -8,6 +8,27 @@ namespace ArkanoidGame {
 
 	class CollisionHandler;
 
+	class PlatformState {
+	public:
+		virtual ~PlatformState() {};
+
+		virtual float GetWidth() = 0;
+	};
+
+	class PlatformStateDefault : public PlatformState {
+	public:
+		~PlatformStateDefault() {};
+
+		virtual float GetWidth() override { return 150.f; }
+	};
+
+	class PlatformStateBigger : public PlatformState {
+	public:
+		~PlatformStateBigger() {};
+
+		virtual float GetWidth() override { return 300.f; }
+	};
+
 	class Platform : public GameObject
 	{
 	public:
@@ -21,6 +42,8 @@ namespace ArkanoidGame {
 			NONE
 		};
 
+		void SetState(std::shared_ptr<PlatformState> state);
+
 		void Update(PlatformDirection platformDirection, float deltaTime);
 		void Draw(sf::RenderWindow& window) override;
 
@@ -33,6 +56,7 @@ namespace ArkanoidGame {
 	private:
 		sf::RectangleShape platform;
 		PlatformDirection direction;
+		std::shared_ptr<PlatformState> state;
 	};
 
 }

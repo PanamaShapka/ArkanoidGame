@@ -9,7 +9,7 @@ namespace ArkanoidGame {
 		return instance;
 	}
 
-	Application::Application() : window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), GAME_NAME) 
+	Application::Application() : window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), GAME_NAME)
 	{	
 		// Init game
 	}

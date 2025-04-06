@@ -5,7 +5,7 @@ namespace ArkanoidGame {
 	Platform::Platform()
 	{
 		// Init rectangle
-		platform.setFillColor(sf::Color(64.f, 224.f, 208.f, 255.f));
+		platform.setFillColor(sf::Color::White);
 		platform.setSize(sf::Vector2f(150.f, 10.f));
 		SetRectangleRelativeOrigin(platform, sf::Vector2f(0.5f, 0.5f));
 		
@@ -15,6 +15,13 @@ namespace ArkanoidGame {
 	Platform::~Platform()
 	{
 
+	}
+
+	void Platform::SetState(std::shared_ptr<PlatformState> state)
+	{
+		this->state = state;
+		platform.setSize(sf::Vector2f(state->GetWidth(), platform.getLocalBounds().height));
+		SetRectangleRelativeOrigin(platform, sf::Vector2f(0.5f, 0.5f));
 	}
 
 	void Platform::Update(PlatformDirection platformDirection, float deltaTime)
@@ -28,7 +35,7 @@ namespace ArkanoidGame {
 		case ArkanoidGame::Platform::PlatformDirection::RIGHT: {
 
 			// Check platform collision with right screen border
-			if (platform.getPosition().x + (platform.getLocalBounds().width / 2.f) > SCREEN_WIDTH - PLATFORM_MOVEMENT_RESTRICTION_DISTANCE_FROM_SCREEN_BORDERS) {
+			if (platform.getPosition().x + (platform.getGlobalBounds().width / 2.f) > SCREEN_WIDTH - PLATFORM_MOVEMENT_RESTRICTION_DISTANCE_FROM_SCREEN_BORDERS) {
 				// Block the platform movement to the right
 				return;
 			}
@@ -40,7 +47,7 @@ namespace ArkanoidGame {
 		case ArkanoidGame::Platform::PlatformDirection::LEFT: {
 
 			// Check platform collision with left screen border
-			if (platform.getPosition().x - (platform.getLocalBounds().width / 2.f) < 0.f + PLATFORM_MOVEMENT_RESTRICTION_DISTANCE_FROM_SCREEN_BORDERS) {
+			if (platform.getPosition().x - (platform.getGlobalBounds().width / 2.f) < 0.f + PLATFORM_MOVEMENT_RESTRICTION_DISTANCE_FROM_SCREEN_BORDERS) {
 				// Block the platform movement to the left
 				return;
 			}

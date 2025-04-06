@@ -3,6 +3,7 @@
 #include "GameState_GameOverMenu.h"
 #include "GameState_MainMenu.h"
 #include "GameState_GameWinMenu.h"
+#include "GameState_ScoreMenu.h"
 
 namespace ArkanoidGame {
 
@@ -14,7 +15,8 @@ namespace ArkanoidGame {
 			PLAYING = 0,
 			MAIN_MENU,
 			GAME_OVER,
-			GAME_WIN
+			GAME_WIN,
+			SCORE_MENU
 		};
 
 		void Update(float deltaTime);
@@ -28,6 +30,7 @@ namespace ArkanoidGame {
 		GameState_GameOverMenu gameState_GameOverMenu;
 		GameState_MainMenu gameState_MainMenu;
 		GameState_GameWinMenu gameState_GameWinMenu;
+		GameState_ScoreMenu gameState_ScoreMenu;
 
 		State state = State::MAIN_MENU;
 		GameStateData* gameStateData = &gameState_MainMenu;

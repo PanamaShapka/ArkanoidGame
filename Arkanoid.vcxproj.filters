@@ -31,6 +31,30 @@
     <Filter Include="Файлы заголовков\GameState\GameStates">
       <UniqueIdentifier>{6844b123-0526-4881-8411-ed3456225671}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\Block\Blocks">
+      <UniqueIdentifier>{63cb90ca-a366-42aa-bd2c-2b5d556f1760}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Block\Blocks">
+      <UniqueIdentifier>{531bdbca-3a49-4e1b-9b9f-184f8ec94e0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Bonus">
+      <UniqueIdentifier>{ffc184da-7e64-4cdd-b4a1-359dbf912348}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Bonus">
+      <UniqueIdentifier>{8d5361eb-65f7-45c3-8dce-72137929e9ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Bonus\BonusObjects">
+      <UniqueIdentifier>{aa54fc34-97b7-4f43-9813-460cd6fdb6f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Bonus\BonusObjects">
+      <UniqueIdentifier>{747f9a23-e24e-4851-acc8-e9232d43b9c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Bonus\Bonuses">
+      <UniqueIdentifier>{684b161a-ffdb-4202-8c92-a312bcca07e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Bonus\Bonuses">
+      <UniqueIdentifier>{e8f8046b-9191-4ceb-84bb-4c3b43ade5ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMain.cpp">
@@ -51,26 +75,14 @@
     <ClCompile Include="Ball.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="GameStateData.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="BlocksSet.cpp">
-      <Filter>Исходные файлы\Block</Filter>
-    </ClCompile>
-    <ClCompile Include="Block.cpp">
-      <Filter>Исходные файлы\Block</Filter>
     </ClCompile>
     <ClCompile Include="CollisionHandler.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="GameState_Playing.cpp">
       <Filter>Исходные файлы\GameState\GameStates</Filter>
-    </ClCompile>
-    <ClCompile Include="GameState.cpp">
-      <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="GameState_GameOverMenu.cpp">
       <Filter>Исходные файлы\GameState\GameStates</Filter>
@@ -81,11 +93,68 @@
     <ClCompile Include="GameState_GameWinMenu.cpp">
       <Filter>Исходные файлы\GameState\GameStates</Filter>
     </ClCompile>
+    <ClCompile Include="GameState.cpp">
+      <Filter>Исходные файлы\GameState</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStateData.cpp">
+      <Filter>Исходные файлы\GameState</Filter>
+    </ClCompile>
     <ClCompile Include="GlassBlock.cpp">
-      <Filter>Исходные файлы</Filter>
+      <Filter>Исходные файлы\Block\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="BonusObject.cpp">
+      <Filter>Исходные файлы\Bonus</Filter>
+    </ClCompile>
+    <ClCompile Include="BonusObjectFactory.cpp">
+      <Filter>Исходные файлы\Bonus</Filter>
+    </ClCompile>
+    <ClCompile Include="BonusObject_BiggerPlatform.cpp">
+      <Filter>Исходные файлы\Bonus\BonusObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="BonusObject_Fireball.cpp">
+      <Filter>Исходные файлы\Bonus\BonusObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="BonusObject_GlassBlocks.cpp">
+      <Filter>Исходные файлы\Bonus\BonusObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="BonusObject_MultiMiniBall.cpp">
+      <Filter>Исходные файлы\Bonus\BonusObjects</Filter>
     </ClCompile>
     <ClCompile Include="BasicBlock.cpp">
+      <Filter>Исходные файлы\Block\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="BlocksSet.cpp">
+      <Filter>Исходные файлы\Block</Filter>
+    </ClCompile>
+    <ClCompile Include="Block.cpp">
+      <Filter>Исходные файлы\Block</Filter>
+    </ClCompile>
+    <ClCompile Include="BonusObjectSet.cpp">
+      <Filter>Исходные файлы\Bonus</Filter>
+    </ClCompile>
+    <ClCompile Include="Bonus.cpp">
+      <Filter>Исходные файлы\Bonus</Filter>
+    </ClCompile>
+    <ClCompile Include="Bonus_Fireball.cpp">
+      <Filter>Исходные файлы\Bonus\Bonuses</Filter>
+    </ClCompile>
+    <ClCompile Include="BonusSet.cpp">
+      <Filter>Исходные файлы\Bonus</Filter>
+    </ClCompile>
+    <ClCompile Include="Bonus_BiggerPlatform.cpp">
+      <Filter>Исходные файлы\Bonus\Bonuses</Filter>
+    </ClCompile>
+    <ClCompile Include="Bonus_GlassBlocks.cpp">
+      <Filter>Исходные файлы\Bonus\Bonuses</Filter>
+    </ClCompile>
+    <ClCompile Include="Bonus_MultiMiniBall.cpp">
+      <Filter>Исходные файлы\Bonus\Bonuses</Filter>
+    </ClCompile>
+    <ClCompile Include="PointsCounter.cpp">
       <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="GameState_ScoreMenu.cpp">
+      <Filter>Исходные файлы\GameState\GameStates</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -107,9 +176,6 @@
     <ClInclude Include="Ball.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="GameStateData.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
@@ -125,9 +191,6 @@
     <ClInclude Include="GameState_Playing.h">
       <Filter>Файлы заголовков\GameState\GameStates</Filter>
     </ClInclude>
-    <ClInclude Include="GameState.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="GameState_GameOverMenu.h">
       <Filter>Файлы заголовков\GameState\GameStates</Filter>
     </ClInclude>
@@ -137,11 +200,62 @@
     <ClInclude Include="GameState_GameWinMenu.h">
       <Filter>Файлы заголовков\GameState\GameStates</Filter>
     </ClInclude>
-    <ClInclude Include="GlassBlock.h">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="GameState.h">
+      <Filter>Файлы заголовков\GameState</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStateData.h">
+      <Filter>Файлы заголовков\GameState</Filter>
     </ClInclude>
     <ClInclude Include="BasicBlock.h">
+      <Filter>Файлы заголовков\Block\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="GlassBlock.h">
+      <Filter>Файлы заголовков\Block\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="BonusObject.h">
+      <Filter>Файлы заголовков\Bonus</Filter>
+    </ClInclude>
+    <ClInclude Include="BonusObjectFactory.h">
+      <Filter>Файлы заголовков\Bonus</Filter>
+    </ClInclude>
+    <ClInclude Include="BonusObject_BiggerPlatform.h">
+      <Filter>Файлы заголовков\Bonus\BonusObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="BonusObject_Fireball.h">
+      <Filter>Файлы заголовков\Bonus\BonusObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="BonusObject_GlassBlocks.h">
+      <Filter>Файлы заголовков\Bonus\BonusObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="BonusObject_MultiMiniBall.h">
+      <Filter>Файлы заголовков\Bonus\BonusObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="BonusObjectSet.h">
+      <Filter>Файлы заголовков\Bonus</Filter>
+    </ClInclude>
+    <ClInclude Include="Bonus.h">
+      <Filter>Файлы заголовков\Bonus</Filter>
+    </ClInclude>
+    <ClInclude Include="Bonus_Fireball.h">
+      <Filter>Файлы заголовков\Bonus\Bonuses</Filter>
+    </ClInclude>
+    <ClInclude Include="BonusSet.h">
+      <Filter>Файлы заголовков\Bonus</Filter>
+    </ClInclude>
+    <ClInclude Include="Bonus_BiggerPlatform.h">
+      <Filter>Файлы заголовков\Bonus\Bonuses</Filter>
+    </ClInclude>
+    <ClInclude Include="Bonus_GlassBlocks.h">
+      <Filter>Файлы заголовков\Bonus\Bonuses</Filter>
+    </ClInclude>
+    <ClInclude Include="Bonus_MultiMiniBall.h">
+      <Filter>Файлы заголовков\Bonus\Bonuses</Filter>
+    </ClInclude>
+    <ClInclude Include="PointsCounter.h">
       <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState_ScoreMenu.h">
+      <Filter>Файлы заголовков\GameState\GameStates</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

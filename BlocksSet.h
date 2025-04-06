@@ -1,23 +1,32 @@
 #pragma once
 #include "BasicBlock.h"
 #include "GlassBlock.h"
+#include "PointsCounter.h"
 
 namespace ArkanoidGame {
 
-	class BlocksSet : public GameObject
+	class CollisionHandler;
+	class Ball;
+
+	class BlocksSet : public GameObject, public PointsCounterObserverable
 	{
 	public:
 
 		BlocksSet();
-		~BlocksSet();
+		~BlocksSet() {}
 
-		void HitBlock(sf::Vector2i positionOnField);
+		friend CollisionHandler;
+
+		void HitBlock(sf::Vector2i positionOnField, Ball& ball);
+		void DestroyBlock(sf::Vector2i positionOnField);
 		void Draw(sf::RenderWindow& window) override;
 		void SetStartState();
 		
-		int GetAmountBlocks() { return basicBlocks.size() + glassBlocks.size(); }
-		std::vector<BasicBlock> GetBasicBlocks() { return basicBlocks; }
-		std::vector<GlassBlock> GetGlassBlocks() { return glassBlocks; }
+		int GetAmountBlocks() { return blocks.size(); }
+		void ReplaceAllToGlassBlocks();
+		void SetBlockSet(BlocksSet blockSet);
+
+		std::vector<std::shared_ptr<Block>> GetBlocks() { return blocks; }
 
 	private:
 
@@ -25,8 +34,7 @@ namespace ArkanoidGame {
 
 	private:
 
-		std::vector<BasicBlock> basicBlocks;
-		std::vector<GlassBlock> glassBlocks;
+		std::vector<std::shared_ptr<Block>> blocks;
 
 	};
 

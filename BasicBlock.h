@@ -7,7 +7,7 @@ namespace ArkanoidGame {
 	{
 	public:
 
-		BasicBlock(const sf::Vector2i positionOnField) : Block(positionOnField) { SetBlockHP(); SetBlockColor(); }
+		BasicBlock(const sf::Vector2i positionOnField) : Block(positionOnField, Type::BasicBlock) { SetBlockHP(); SetBlockColor(); }
 
 	private:
 

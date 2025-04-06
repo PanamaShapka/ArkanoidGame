@@ -34,6 +34,8 @@ namespace ArkanoidGame {
 		sf::Text titleText;
 		sf::Text resumeText;
 		sf::Text exitToMenuText;
+		sf::Text pointsText;
+		sf::Text bestPointsText;
 	};
 
 }

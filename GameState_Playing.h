@@ -7,11 +7,17 @@ namespace ArkanoidGame {
 	{
 	public:
 
+		GameState_Playing();
+
 		void Update(float deltaTime, Game& game) override;
 		void Draw(sf::RenderWindow& window, Game& game) override;
 		void SetStartState(Game& game) override;
 
 	private:
+
+		sf::Font font;
+
+		sf::Text pointsText;
 	};
 
 }

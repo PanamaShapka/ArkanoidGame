@@ -5,15 +5,17 @@ namespace ArkanoidGame {
 	void BasicBlock::SetBlockHP()
 	{
 		int currentChanceToImproveBlockHP = 2;
-		while (HP != MAX_BASIC_BLOCK_HP) {
+		while (maxHP != MAX_BASIC_BLOCK_HP) {
 			if (rand() % currentChanceToImproveBlockHP == 0) {
-				++HP;
+				++maxHP;
 				currentChanceToImproveBlockHP *= 2; // Double reduce the chance
 			}
 			else {
 				break;
 			}
 		}
+
+		HP = maxHP;
 	}
 
 	void BasicBlock::SetBlockColor()

@@ -4,7 +4,8 @@ namespace ArkanoidGame {
 
 	void GlassBlock::SetBlockHP()
 	{
-		HP = 1;
+		maxHP = MAX_GLASS_BLOCK_HP;
+		HP = maxHP;
 	}
 
 	void GlassBlock::SetBlockColor()

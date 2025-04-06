@@ -38,23 +38,14 @@ namespace ArkanoidGame {
 		exitText.setString(exitTextString);
 		exitText.setPosition(sf::Vector2f(SCREEN_WIDTH / 2.f - exitText.getGlobalBounds().width / 2.f - exitTextString.length() * playText.getOutlineThickness(), background.getPosition().y + background.getGlobalBounds().height - exitText.getGlobalBounds().height * 2.f - 10.f));
 
-		leaderboardText.setFont(font);
-		leaderboardText.setCharacterSize(40);
-		leaderboardText.setOutlineThickness(0.5f);
-		leaderboardText.setOutlineColor(sf::Color::White);
-		leaderboardText.setFillColor(sf::Color::White);
-		std::string leaderboardTextString = "Leaderboard";
-		leaderboardText.setString(leaderboardTextString);
-		leaderboardText.setPosition(sf::Vector2f(SCREEN_WIDTH / 2.f - leaderboardText.getGlobalBounds().width / 2.f, exitText.getPosition().y - 20.f - exitText.getGlobalBounds().height));
-
-		settingsText.setFont(font);
-		settingsText.setCharacterSize(40);
-		settingsText.setOutlineThickness(0.5f);
-		settingsText.setOutlineColor(sf::Color::White);
-		settingsText.setFillColor(sf::Color::White);
-		std::string settingsTextString = "Settings";
-		settingsText.setString(settingsTextString);
-		settingsText.setPosition(sf::Vector2f(SCREEN_WIDTH / 2.f - settingsText.getGlobalBounds().width / 2.f, leaderboardText.getPosition().y - 20.f - leaderboardText.getGlobalBounds().height));
+		scoreText.setFont(font);
+		scoreText.setCharacterSize(40);
+		scoreText.setOutlineThickness(0.5f);
+		scoreText.setOutlineColor(sf::Color::White);
+		scoreText.setFillColor(sf::Color::White);
+		std::string leaderboardTextString = "Score";
+		scoreText.setString(leaderboardTextString);
+		scoreText.setPosition(sf::Vector2f(SCREEN_WIDTH / 2.f - scoreText.getGlobalBounds().width / 2.f, exitText.getPosition().y - 20.f - exitText.getGlobalBounds().height));
 
 		playText.setFont(font);
 		playText.setCharacterSize(40);
@@ -63,7 +54,7 @@ namespace ArkanoidGame {
 		playText.setFillColor(sf::Color::White);
 		std::string playTextString = "Play";
 		playText.setString(playTextString);
-		playText.setPosition(sf::Vector2f(SCREEN_WIDTH / 2.f - playText.getGlobalBounds().width / 2.f, settingsText.getPosition().y - 20.f - settingsText.getGlobalBounds().height));
+		playText.setPosition(sf::Vector2f(SCREEN_WIDTH / 2.f - playText.getGlobalBounds().width / 2.f, scoreText.getPosition().y - 20.f - scoreText.getGlobalBounds().height));
 	
 		ChangeButton(Button::PLAY_BUTTON);
 	}
@@ -80,19 +71,14 @@ namespace ArkanoidGame {
 					ChangeButton(Button::EXIT_BUTTON);
 					break;
 				}
-				case Button::SETTINGS_BUTTON:
+				case Button::SCORE_BUTTON:
 				{
 					ChangeButton(Button::PLAY_BUTTON);
 					break;
 				}
-				case Button::LEADERBOARD_BUTTON:
-				{
-					ChangeButton(Button::SETTINGS_BUTTON);
-					break;
-				}
 				case Button::EXIT_BUTTON:
 				{
-					ChangeButton(Button::LEADERBOARD_BUTTON);
+					ChangeButton(Button::SCORE_BUTTON);
 					break;
 				}
 				default:
@@ -109,15 +95,10 @@ namespace ArkanoidGame {
 				{
 				case Button::PLAY_BUTTON:
 				{
-					ChangeButton(Button::SETTINGS_BUTTON);
+					ChangeButton(Button::SCORE_BUTTON);
 					break;
 				}
-				case Button::SETTINGS_BUTTON:
-				{
-					ChangeButton(Button::LEADERBOARD_BUTTON); 
-					break;
-				}
-				case Button::LEADERBOARD_BUTTON:
+				case Button::SCORE_BUTTON:
 				{
 					ChangeButton(Button::EXIT_BUTTON);
 					break;
@@ -144,14 +125,9 @@ namespace ArkanoidGame {
 					Application::Instance().GetGameState().SetState(GameState::State::PLAYING);
 					break;
 				}
-				case Button::SETTINGS_BUTTON:
+				case Button::SCORE_BUTTON:
 				{
-					
-					break;
-				}
-				case Button::LEADERBOARD_BUTTON:
-				{
-					
+					Application::Instance().GetGameState().SetState(GameState::State::SCORE_MENU);
 					break;
 				}
 				case Button::EXIT_BUTTON:
@@ -177,8 +153,7 @@ namespace ArkanoidGame {
 		window.draw(background);
 		window.draw(titleText);
 		window.draw(playText);
-		window.draw(settingsText);
-		window.draw(leaderboardText);
+		window.draw(scoreText);
 		window.draw(exitText);
 	}
 
@@ -194,11 +169,8 @@ namespace ArkanoidGame {
 		playText.setFillColor(sf::Color::White);
 		playText.setOutlineColor(sf::Color::White);
 
-		settingsText.setFillColor(sf::Color::White);
-		settingsText.setOutlineColor(sf::Color::White);
-
-		leaderboardText.setFillColor(sf::Color::White);
-		leaderboardText.setOutlineColor(sf::Color::White);
+		scoreText.setFillColor(sf::Color::White);
+		scoreText.setOutlineColor(sf::Color::White);
 
 		exitText.setFillColor(sf::Color::White);
 		exitText.setOutlineColor(sf::Color::White);
@@ -210,14 +182,9 @@ namespace ArkanoidGame {
 			playText.setFillColor(sf::Color::Green);
 			break;
 		}
-		case Button::SETTINGS_BUTTON:
+		case Button::SCORE_BUTTON:
 		{
-			settingsText.setFillColor(sf::Color::Green);
-			break;
-		}
-		case Button::LEADERBOARD_BUTTON:
-		{
-			leaderboardText.setFillColor(sf::Color::Green);
+			scoreText.setFillColor(sf::Color::Green);
 			break;
 		}
 		case Button::EXIT_BUTTON:

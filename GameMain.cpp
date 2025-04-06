@@ -5,7 +5,7 @@ using namespace ArkanoidGame;
 int main() {
 
 	// Init random seed
-	srand((unsigned int)time(nullptr));
+	srand(time(NULL));
 
 	setlocale(LC_ALL, "ru");
 	Application::Instance().Run();

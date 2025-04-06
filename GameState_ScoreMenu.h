@@ -4,11 +4,11 @@
 
 namespace ArkanoidGame {
 
-	class GameState_MainMenu : public GameStateData
+	class GameState_ScoreMenu : public GameStateData
 	{
 	public:
 
-		GameState_MainMenu();
+		GameState_ScoreMenu();
 
 		void Update(float deltaTime, Game& game) override;
 		void Draw(sf::RenderWindow& window, Game& game) override;
@@ -16,17 +16,8 @@ namespace ArkanoidGame {
 
 	private:
 
-		enum class Button {
-			PLAY_BUTTON = 0,
-			SCORE_BUTTON,
-			EXIT_BUTTON
-		};
-
-		void ChangeButton(Button button);
-
 	private:
 
-		Button button = Button::PLAY_BUTTON;
 		bool isKeyPressed = false;
 
 		sf::Font font;
@@ -34,8 +25,7 @@ namespace ArkanoidGame {
 		sf::RectangleShape windowBackgorund;
 		sf::RectangleShape background;
 		sf::Text titleText;
-		sf::Text playText;
-		sf::Text scoreText;
+		sf::Text bestScoreText;
 		sf::Text exitText;
 	};
 
